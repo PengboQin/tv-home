@@ -1,0 +1,1 @@
+<resources><style name="AppTheme" parent="android:style/Theme.Material.NoActionBar"><item name="android:colorAccent">#AAC5DF</item><item name="android:windowActionModeOverlay">true</item><item name="android:fontFamily">sans</item><item name="android:windowBackground">#24201B</item></style></resources>

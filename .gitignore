@@ -1,0 +1,15 @@
+.DS_Store
+.private/
+private/
+build/
+artifacts/
+local/
+__pycache__/
+*.apk
+*.idsig
+*.jks
+*.keystore
+*.pem
+*.key
+.env
+.env.*
