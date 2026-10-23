@@ -1,0 +1,22 @@
+{
+  "applicationId": "com.pengboqin.tvhome.preview",
+  "versionName": "0.1.0-preview.1",
+  "versionCode": 1,
+  "sourceCommit": "a9de6293f4c7c3fd6fad24bc357fee6acf363566",
+  "apk": "tvhome-0.1.0-preview.1-b1.apk",
+  "apkSHA256": "df0f9e0414cd6816445f87192cbd6cce666e376e5884041c18f15b0c41b3a181",
+  "certificateSHA256": "5af9270eb6a4b7beff3199c66fe0341276a0247d59c6a4cced7301705b78751c",
+  "abi": "universal DEX; no native libraries",
+  "minSdk": 26,
+  "targetSdk": 30,
+  "permissions": [
+    "android.permission.INTERNET"
+  ],
+  "homeCategory": false,
+  "bootReceiver": false,
+  "inputService": false,
+  "sourceClean": true,
+  "signing": "stable local development identity; not vendor/system key",
+  "hostTests": "input ownership and URL origin checks passed",
+  "installation": "not attempted"
+}
