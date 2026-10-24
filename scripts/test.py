@@ -19,7 +19,7 @@ javac=str(Path(jdk)/'bin/javac') if jdk else shutil.which('javac')
 java=str(Path(jdk)/'bin/java') if jdk else shutil.which('java')
 check(javac and java,'Set TVHOME_JDK or JAVA_HOME to JDK17')
 build=R/'build/test-classes';build.mkdir(parents=True,exist_ok=True)
-sources=[R/'src/com/linghe/tvhome/KeyPolicy.java',R/'src/com/linghe/tvhome/WebPolicy.java',R/'tests/PolicyTest.java']
+sources=[R/'src/com/linghe/tvhome/KeyPolicy.java',R/'src/com/linghe/tvhome/WebPolicy.java',R/'src/com/linghe/tvhome/ShellState.java',R/'src/com/linghe/tvhome/ResourcePolicy.java',R/'tests/PolicyTest.java']
 subprocess.run([javac,'--release','8','-encoding','UTF-8','-d',str(build),*map(str,sources)],check=True)
 subprocess.run([java,'-cp',str(build),'com.linghe.tvhome.PolicyTest'],check=True)
 print('Public manifest/identity/version checks passed; no device operation')

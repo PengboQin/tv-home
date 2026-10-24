@@ -1,5 +1,7 @@
 # TV Home
 
+**Source update, 2026-10-23:** the repository now includes later native-sidebar/layout work and a synthetic HA-native UI study with persistent bottom tabs and a collapsible context sidebar. The Android HA network client and real entity controls are not implemented. **The downloadable release remains 0.1.0-preview.1**; this update does not publish a new APK. Start with [current status](STATUS.md), [the latest synthetic study](../design/ha-study.html) and [the HA contract draft](HA-CONTRACT.md). The implementation described below is the existing WebView-based app, not the planned native HA client.
+
 An experimental, free Android TV home-screen app: embed your existing Home Assistant dashboard, browse launchable installed apps, open a web bookmark, show a clock and choose built-in backgrounds. MIT licensed.
 
 **This is a normal TV app, not a default HOME replacement.** It does not debloat, root, flash firmware, modify HDMI/CEC/audio, start at boot or run an Agent control service. Native source uses Android Views and the device's WebView. Min SDK26 / target30; INTERNET only. Public preview has debugging disabled. The interactive design under `design/` is a synthetic mock, not a promise of implemented native features.

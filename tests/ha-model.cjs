@@ -1,0 +1,15 @@
+const assert=require('assert');const m=require('../design/ha-model.js');
+const states=[{entity_id:'weather.example',state:'sunny',attributes:{temperature:74,temperature_unit:'°F'}},{entity_id:'switch.one',state:'off',attributes:{friendly_name:'任意名称'}},{entity_id:'light.two',state:'unavailable',attributes:{}},{entity_id:'automation.rule',state:'on',attributes:{current:2,mode:'queued'}},{entity_id:'automation.missing',state:'off',attributes:{}},{entity_id:'lock.door',state:'locked',attributes:{}},{entity_id:'switch.hidden',state:'on',attributes:{}}];
+const registry={areas:[{area_id:'roomX',name:'自定义房间'}],devices:[{id:'devX',area_id:'roomX'}],entities:[{entity_id:'switch.one',device_id:'devX'},{entity_id:'switch.hidden',hidden:true}]};
+const model=m.discover(states,registry,{allowedEntities:['switch.one','automation.rule','light.two']});
+assert.equal(model.weather[0].temperature,74);assert.equal(model.weather[0].temperatureUnit,'°F');assert.equal(model.weather[0].humidity,null);
+assert(!model.entities.some(e=>['lock.door','switch.hidden'].includes(e.id)));
+const s=model.entities.find(e=>e.id==='switch.one');assert.equal(s.areaName,'自定义房间');assert.equal(s.name,'任意名称');assert.equal(m.discover(states).switches[0].readOnly,true);
+const a=model.automations.find(e=>e.id==='automation.rule');assert.equal(a.enabled,true);assert.equal(a.runningLabel,'2 项运行 / 排队');assert.equal(model.automations.find(e=>e.id==='automation.missing').current,null);
+assert.deepEqual(m.actionFor(a,false),{type:'call_service',domain:'automation',service:'turn_off',target:{entity_id:'automation.rule'},service_data:{stop_actions:false}});
+assert.equal(m.actionFor(model.entities.find(e=>e.id==='light.two'),true),null);
+assert.equal(m.actionFor(m.discover(states,registry,{online:false,allowedEntities:['switch.one']}).entities.find(e=>e.id==='switch.one'),true),null);
+assert.equal(m.actionFor(m.discover(states).entities.find(e=>e.id==='switch.one'),true),null);
+assert.equal(m.actionFor(s,true).service,'turn_on');assert.equal(s.state,'off','Describing an action must not optimistically change authoritative state');
+assert(!JSON.stringify(require('../examples/ha-profile.example.json')).match(/access_token|refresh_token|password/i));
+console.log('PASS: generic discovery, device-area fallback, missing units/attributes, unavailable and offline gating, initial read-only selection, automation queue semantics and non-stopping explicit action descriptor. No network or device calls.');

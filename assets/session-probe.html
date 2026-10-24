@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>本地布局示意</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden}
+body{font:18px -apple-system,BlinkMacSystemFont,"Noto Sans",sans-serif;background:#e8e3d9;color:#514b42}
+header{height:14%;min-height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 4%;border-bottom:1px solid #cec5b655}
+header strong{font-size:20px;font-weight:500}header span{font-size:12px;letter-spacing:.03em;color:#746a5c;background:#dcd5c8;border:1px solid #c6bba9;padding:7px 12px;border-radius:20px}
+main{height:74%;display:grid;grid-template-columns:50% 45%;gap:5%;padding:4% 4% 3%;align-items:center}
+svg{width:100%;height:100%;max-height:340px}.area{fill:#dad3c6;stroke:#b4aa99;stroke-width:1.5}.current{fill:#ccd4de;stroke:#7e92aa}.outline{stroke:#aaa191;stroke-width:1.5;fill:none}.furniture{stroke:#c3baac;stroke-width:2;fill:none}svg text{fill:#7c7365;font-size:12px}.current-label{fill:#526980}
+.room-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}.room-title h1{font-size:30px;letter-spacing:.08em;font-weight:400;margin:0}.room-title span{font-size:13px;color:#8a8072}
+.devices{display:grid;grid-template-columns:1fr 1fr;gap:14px}button.device{font:16px sans-serif;display:flex;align-items:center;gap:10px;color:#645a4b;background:#f1ece3;border:1px solid #d7cfc1;border-radius:30px;padding:15px 18px;text-align:left;white-space:nowrap}.dot{height:6px;width:6px;border-radius:100%;background:#b4ac9f;margin-left:auto}.device.on{background:#d4dce5;border-color:#c2ccdb;color:#51657f}.on .dot{background:#7087a3}button:focus-visible,summary:focus-visible{outline:3px solid #7188a4;outline-offset:3px}
+footer{height:12%;margin:0 4%;border-top:1px solid #c8c0b355;display:flex;align-items:center;justify-content:space-between;font-size:12px;color:#8b8070}footer small{font-size:11px;letter-spacing:.03em}
+details{position:absolute;right:12px;bottom:10px;z-index:3;color:#5b554b;font-size:13px}summary{list-style:none;text-align:right;cursor:pointer;color:#8c8273;font-size:15px;padding:3px 6px}summary::-webkit-details-marker{display:none}.probe{padding:14px 18px;border:1px solid #b8ac98;background:#f4efe5;border-radius:10px;box-shadow:0 8px 24px #0002}details p{margin:0 0 12px}.probe button{font:15px sans-serif;padding:10px 16px;border:0;border-radius:8px;background:#d3deeb;color:#35485d}
+</style>
+<header><strong>家庭主页</strong><span>演示 · 未连接 HA</span></header>
+<main>
+<svg viewBox="0 0 440 300" aria-label="合成户型示意，非真实家庭">
+<path class="outline" d="M20 15H420V283H20Z"/>
+<rect class="area" x="25" y="20" width="130" height="105"/><rect class="area" x="160" y="20" width="100" height="105"/><rect class="area" x="265" y="20" width="150" height="105"/>
+<rect class="area" x="25" y="130" width="130" height="148"/><rect class="area current" x="160" y="130" width="255" height="106"/><rect class="area" x="160" y="241" width="255" height="37"/>
+<path class="furniture" d="M39 32h75v49H39ZM39 42h75M46 32v10m59-10v10M285 35h110v15H285ZM44 152h28v102H44ZM72 152h61v24H72ZM191 153h115v37H191Zm0 45h115v20H191ZM366 163h20v48h-20Z"/>
+<text x="90" y="107" text-anchor="middle">卧室</text><text x="210" y="76" text-anchor="middle">浴室</text><text x="340" y="97" text-anchor="middle">书房</text><text x="110" y="239" text-anchor="middle">厨房</text><text class="current-label" x="333" y="219" text-anchor="middle">客厅</text><text x="287" y="265" text-anchor="middle">阳台</text>
+</svg>
+<section><div class="room-title"><h1>客厅</h1><span>23.8°　52%</span></div><div class="devices">
+<button class="device">主照明<i class="dot"></i></button><button class="device on">射灯<i class="dot"></i></button><button class="device">电视灯<i class="dot"></i></button><button class="device on">落地灯<i class="dot"></i></button><button class="device">辅助灯<i class="dot"></i></button><button class="device">窗边灯<i class="dot"></i></button>
+</div></section>
+</main>
+<footer><span>房间与设备</span><small></small></footer>
+<details id="debug"><summary aria-label="测试信息">ⓘ</summary><div class="probe"><p id="marker"></p><button id="counter">确认按钮 · 0</button><p id="cap" style="margin:12px 0 0"></p></div></details>
+<script>
+window.tvHomeProbe={marker:Date.now(),count:0};
+document.getElementById('marker').textContent='本次页面标记：'+window.tvHomeProbe.marker;
+document.getElementById('counter').onclick=function(){this.textContent='确认按钮 · '+(++window.tvHomeProbe.count)};
+document.getElementById('cap').textContent='JavaScript 可用；Shadow DOM：'+(typeof HTMLElement.prototype.attachShadow==='function'?'可用':'不可用');
+document.querySelectorAll('.device').forEach(function(button){button.onclick=function(){button.classList.toggle('on')}});
+</script>
+</html>

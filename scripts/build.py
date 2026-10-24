@@ -35,9 +35,9 @@ for directory in ['classes','generated','dex','assets','test-classes']:
  p=B/directory
  if p.exists():shutil.rmtree(p)
  p.mkdir()
-run([JDK/'bin/javac','--release','8','-encoding','UTF-8','-d',B/'test-classes',R/'src/com/linghe/tvhome/KeyPolicy.java',R/'src/com/linghe/tvhome/WebPolicy.java',R/'tests/PolicyTest.java'])
+run([JDK/'bin/javac','--release','8','-encoding','UTF-8','-d',B/'test-classes',R/'src/com/linghe/tvhome/KeyPolicy.java',R/'src/com/linghe/tvhome/WebPolicy.java',R/'src/com/linghe/tvhome/ShellState.java',R/'src/com/linghe/tvhome/ResourcePolicy.java',R/'tests/PolicyTest.java'])
 run([JDK/'bin/java','-cp',B/'test-classes','com.linghe.tvhome.PolicyTest'])
-shutil.copy2(R/'assets/coast-wallpaper.png',B/'assets/coast-wallpaper.png')
+for asset in ['coast-wallpaper.png','session-probe.html']:shutil.copy2(R/'assets'/asset,B/'assets'/asset)
 build_info=B/'generated/com/linghe/tvhome/BuildInfo.java';build_info.parent.mkdir(parents=True,exist_ok=True)
 build_info.write_text('package com.linghe.tvhome; final class BuildInfo {static final int CODE='+str(code)+';static final String VERSION='+json.dumps(name)+';static final String SOURCE='+json.dumps(commit)+';}')
 run([TOOLS/'aapt2','compile','--dir',R/'res','-o',B/'resources.zip'])
@@ -65,7 +65,7 @@ certificate=re.search(r'Signer #1 certificate SHA-256 digest: ([0-9a-f]+)',verif
 assert certificate,'Cannot verify signer'
 run([TOOLS/'zipalign','-c','-P','16','4',candidate])
 with zipfile.ZipFile(candidate) as apk:assert not any(p.startswith('lib/') for p in apk.namelist()),'Universal Java only'
-meta={'applicationId':package,'versionName':name,'versionCode':code,'sourceCommit':commit,'apk':candidate.name,'apkSHA256':sha(candidate),'certificateSHA256':certificate[1],'abi':'universal DEX; no native libraries','minSdk':26,'targetSdk':30,'permissions':permissions,'homeCategory':False,'bootReceiver':False,'inputService':False,'sourceClean':True,'signing':'stable local development identity; not vendor/system key','hostTests':'input ownership and URL origin checks passed','installation':'not attempted'}
+meta={'applicationId':package,'versionName':name,'versionCode':code,'sourceCommit':commit,'apk':candidate.name,'apkSHA256':sha(candidate),'certificateSHA256':certificate[1],'abi':'universal DEX; no native libraries','minSdk':26,'targetSdk':30,'permissions':permissions,'homeCategory':False,'bootReceiver':False,'inputService':False,'sourceClean':True,'signing':'stable local development identity; not vendor/system key','hostTests':'input/URL, shell/back/session and sampled image/cache policy checks passed','installation':'not attempted'}
 (R/'releases'/f'{code:04d}.json').write_text(json.dumps(meta,ensure_ascii=False,indent=2)+'\n')
 print(json.dumps({'candidate':str(candidate),'versionCode':code,'source':commit[:12],'sha256':meta['apkSHA256'],'signerVerified':True},ensure_ascii=False))
 

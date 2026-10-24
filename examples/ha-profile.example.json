@@ -1,0 +1,7 @@
+{
+ "schemaVersion":1,
+ "connection":{"baseUrl":"http://192.168.1.50:8123","authMode":"oauth"},
+ "display":{"autoDiscover":true,"primaryWeatherEntity":null,"favoriteEntityIds":[],"hiddenEntityIds":[],"sidebarCollapsed":false},
+ "controls":{"requireInitialSelection":true,"allowedEntityIds":[],"automationStopRunningActions":false,"triggerAutomationEnabled":false},
+ "appearance":{"wallpaper":"coast","palette":"warm-slate","clock":"24h"}
+}
